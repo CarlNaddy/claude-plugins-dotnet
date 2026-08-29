@@ -1,0 +1,6 @@
+{
+  "name": "mudblazor",
+  "version": "0.1.0",
+  "description": "Consumer-side guidance for building Blazor UI with MudBlazor: setup and wiring, render-mode rules, component selection and code patterns, and conventions for app-owned components built on top of MudBlazor. Complements the dotnet-blazor skills; does not cover contributing to the MudBlazor library itself.",
+  "skills": ["./skills/"]
+}
