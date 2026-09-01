@@ -256,11 +256,34 @@ The 10 non-enabled upstream plugins (`dotnet-advanced`, `dotnet-ai`,
 `dotnet-experimental`) are available in the marketplace — add any to
 `enabledPlugins` per project as needed.
 
-On each machine:
+On each machine — **first cutover**, when the marketplace's *source repo* changes
+(e.g. `dotnet/skills` → your fork, or a rename): the registered marketplace must
+be **replaced**, not just refreshed. `marketplace update` only re-pulls the
+already-registered source.
+
+```bash
+# WARNING: `marketplace remove` also UNINSTALLS every plugin from that marketplace
+# and prunes them from .claude/settings.json. Commit settings.json first so you
+# can `git checkout` it if the CLI rewrites it.
+claude plugin marketplace remove dotnet-agent-skills          # only if an old entry exists
+
+# The same repo URL must not be pinned under a different marketplace name in ANY
+# settings file. Check ~/.claude/settings.json too — rename any
+# `<other-name> -> CarlNaddy/claude-plugins-dotnet` entry (and its
+# `plugin@<other-name>` keys) to `dotnet-agent-skills` before the next step,
+# or `add` will re-register under the old name.
+claude plugin marketplace add CarlNaddy/claude-plugins-dotnet # registers under the repo's marketplace.json `name`
+
+bash scripts/check-plugins.sh --fix                           # reinstall the enabled plugins
+bash scripts/check-plugins.sh                                 # verify: all ok
+# restart Claude Code to load them into a session
+```
+
+For a **routine resync** (same repo, new commits — see section 9) a refresh is enough:
 
 ```bash
 claude plugin marketplace update dotnet-agent-skills
-bash scripts/check-plugins.sh          # in this repo - verifies all enabled plugins
+bash scripts/check-plugins.sh
 ```
 
 ## 9. Resync later
