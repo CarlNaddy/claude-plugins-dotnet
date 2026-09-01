@@ -1,0 +1,7 @@
+[
+  {
+    "name": "mudblazor",
+    "source": "./plugins/mudblazor",
+    "description": "Consumer-side guidance for building Blazor UI with MudBlazor: setup and wiring, render-mode rules, component selection and code patterns, and conventions for app-owned components built on top of MudBlazor."
+  }
+]
